@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import { Calendar, Download, Gift, Star } from "lucide-react";
 
 // Define types for our application
@@ -259,7 +259,7 @@ const PersonalizedCalendarApp: React.FC = () => {
       if (specialEvents.length > 0) {
         events.push({
           date: new Date(currentDate),
-          ...specialEvents[0],
+          ...specialEvents[0]!,
         });
       } else {
         // Use the celebration generator based on the day of the year
@@ -269,7 +269,7 @@ const PersonalizedCalendarApp: React.FC = () => {
         const generatorIndex = dayOfYear % validGenerators.length;
 
         try {
-          const event = validGenerators[generatorIndex]();
+          const event = validGenerators[generatorIndex]!();
           events.push({
             date: new Date(currentDate),
             ...event,
@@ -311,7 +311,7 @@ const PersonalizedCalendarApp: React.FC = () => {
       // Set the event to all-day by using just the date without time
       const dateString = event.date
         .toISOString()
-        .split("T")[0]
+        .split("T")[0]!
         .replace(/-/g, "");
 
       icalContent += `DTSTAMP:${formatDate(new Date())}\r\n`;
@@ -338,7 +338,7 @@ const PersonalizedCalendarApp: React.FC = () => {
     const randomEvents: CelebrationEvent[] = [];
     for (let i = 0; i < 5; i++) {
       const randomIndex = Math.floor(Math.random() * allEvents.length);
-      randomEvents.push(allEvents[randomIndex]);
+      randomEvents.push(allEvents[randomIndex]!);
     }
 
     setPreviewEvents(randomEvents);
@@ -390,8 +390,8 @@ const PersonalizedCalendarApp: React.FC = () => {
               Create Your Personal Celebration Calendar
             </h2>
             <p className="mb-6 text-gray-600">
-              We'll create a calendar with something special to celebrate about
-              YOU every day of the year!
+              We&apos;ll create a calendar with something special to celebrate
+              about YOU every day of the year!
             </p>
 
             <div>
@@ -584,7 +584,7 @@ const PersonalizedCalendarApp: React.FC = () => {
                 Your Celebration Calendar is Ready!
               </h2>
               <p className="mt-2 text-gray-600">
-                We've created a full year of daily celebrations just for{" "}
+                We&apos;ve created a full year of daily celebrations just for{" "}
                 {userInfo.name}!
               </p>
             </div>
